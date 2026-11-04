@@ -5,10 +5,13 @@ import com.example.carva_x.entity.User;
 import com.example.carva_x.entity.WishlistItem;
 import com.example.carva_x.exception.BadRequestException;
 import com.example.carva_x.exception.NotFoundException;
+import com.example.carva_x.model.JwtValidate;
+import com.example.carva_x.model.response.ProductResponse;
 import com.example.carva_x.model.response.WishlistProductResponse;
 import com.example.carva_x.repository.AuthRepository;
 import com.example.carva_x.repository.ProductRepository;
 import com.example.carva_x.repository.WishlistRepository;
+import com.example.carva_x.service.JwtService;
 import com.example.carva_x.service.WishlistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,10 +27,13 @@ public class WishlistServiceImpl implements WishlistService {
     private final WishlistRepository wishlistRepository;
     private final AuthRepository authRepository;
     private final ProductRepository productRepository;
+    private final JwtService jwtService;
 
     @Override
     @Transactional(readOnly = true)
-    public List<WishlistProductResponse> getWishlist(Integer userId) {
+    public List<WishlistProductResponse> getWishlist(String authHeader) {
+        JwtValidate jwtValidate = jwtService.validateAccessToken(authHeader);
+        Integer userId = jwtValidate.getId();
         requireUser(userId);
 
         return wishlistRepository.findAllByUser_Id(userId).stream()
@@ -36,7 +42,9 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
-    public WishlistProductResponse addProduct(Integer userId, Integer productId) {
+    public WishlistProductResponse addProduct(String authHeader, Integer productId) {
+        JwtValidate jwtValidate = jwtService.validateAccessToken(authHeader);
+        Integer userId = jwtValidate.getId();
         User user = requireUser(userId);
         Product product = requireProduct(productId);
 
@@ -53,13 +61,17 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
-    public void removeProduct(Integer userId, Integer productId) {
+    public void removeProduct(String authHeader, Integer productId) {
+        JwtValidate jwtValidate = jwtService.validateAccessToken(authHeader);
+        Integer userId = jwtValidate.getId();
         WishlistItem item = findWishlistItem(userId, productId);
         wishlistRepository.delete(item);
     }
 
     @Override
-    public WishlistProductResponse replaceProduct(Integer userId, Integer productId, Integer replacementProductId) {
+    public WishlistProductResponse replaceProduct(String authHeader, Integer productId, Integer replacementProductId) {
+        JwtValidate jwtValidate = jwtService.validateAccessToken(authHeader);
+        Integer userId = jwtValidate.getId();
         WishlistItem item = findWishlistItem(userId, productId);
         Product replacementProduct = requireProduct(replacementProductId);
 
@@ -90,10 +102,22 @@ public class WishlistServiceImpl implements WishlistService {
 
     private WishlistProductResponse toResponse(Product product) {
         boolean outOfStock = product.getAmount() <= 0;
+        ProductResponse productResponse = ProductResponse.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .price(toDouble(product.getPrice()))
+                .description(product.getDescription())
+                .tax(toDouble(product.getTax()))
+                .build();
+
         return WishlistProductResponse.builder()
-                .product(product)
+                .product(productResponse)
                 .outOfStock(outOfStock)
                 .notification(outOfStock ? "Este producto ya no está disponible en stock" : null)
                 .build();
+    }
+
+    private Double toDouble(Number value) {
+        return value == null ? null : value.doubleValue();
     }
 }

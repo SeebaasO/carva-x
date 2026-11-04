@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface WishlistService {
 
-    List<WishlistProductResponse> getWishlist(Integer userId);
+    List<WishlistProductResponse> getWishlist(String authHeader);
 
-    WishlistProductResponse addProduct(Integer userId, Integer productId);
+    WishlistProductResponse addProduct(String authHeader, Integer productId);
 
-    void removeProduct(Integer userId, Integer productId);
+    void removeProduct(String authHeader, Integer productId);
 
-    WishlistProductResponse replaceProduct(Integer userId, Integer productId, Integer replacementProductId);
+    WishlistProductResponse replaceProduct(String authHeader, Integer productId, Integer replacementProductId);
 }
