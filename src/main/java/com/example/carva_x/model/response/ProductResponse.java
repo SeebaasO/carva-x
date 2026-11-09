@@ -1,18 +1,18 @@
 package com.example.carva_x.model.response;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
-import java.math.BigDecimal;
-
+@Data
 @Getter
+@Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductResponse {
 
     private Integer id;
     private String name;
-    private BigDecimal price;
-    private Integer amount;
+    private Double price;
     private String description;
-    private BigDecimal tax;
+    private Double tax;
 }
