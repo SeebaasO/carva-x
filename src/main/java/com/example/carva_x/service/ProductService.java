@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<ProductResponse> getProducts();
+    List<ProductResponse> getProducts(String authHeader);
 
-    ProductResponse getProduct(Integer productId);
+    ProductResponse getProduct(String authHeader, Integer productId);
 
-    ProductResponse createProduct(ProductRequest productRequest);
+    ProductResponse createProduct(String authHeader, ProductRequest productRequest);
 
-    ProductResponse updateProduct(Integer productId, ProductRequest productRequest);
+    ProductResponse updateProduct(String authHeader, Integer productId, ProductRequest productRequest);
 
-    void deleteProduct(Integer productId);
+    void deleteProduct(String authHeader, Integer productId);
 }

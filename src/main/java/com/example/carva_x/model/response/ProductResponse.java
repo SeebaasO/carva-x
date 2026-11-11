@@ -13,6 +13,7 @@ public class ProductResponse {
     private Integer id;
     private String name;
     private Double price;
+    private Integer amount;
     private String description;
     private Double tax;
 }

@@ -24,7 +24,7 @@ public class ProductRequest {
 
     @NotNull
     @DecimalMin("0.0")
-    private BigDecimal price;
+    private Double price;
 
     @NotNull
     @PositiveOrZero
@@ -35,5 +35,5 @@ public class ProductRequest {
 
     @NotNull
     @DecimalMin("0.0")
-    private BigDecimal tax;
+    private Double tax;
 }

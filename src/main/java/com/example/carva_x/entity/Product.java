@@ -21,7 +21,7 @@ public class Product{
     private String name; // Nombre
 
     @Column(nullable = false)
-    private Number price; // Precio
+    private Double price; // Precio
 
     @Column(nullable = false)
     private Integer amount; // Cantidad
@@ -30,6 +30,6 @@ public class Product{
     private String description; // Descripcion
 
     @Column(nullable = false)
-    private Number tax; // Impuesto
+    private Double tax; // Impuesto
 
 }
