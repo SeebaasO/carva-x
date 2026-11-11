@@ -28,12 +28,12 @@ public class GlobalExceptionHandler  {
     public ResponseEntity<ApiResponse<ErrorResponse>> handleException(JwtAuthenticationException jwtAuthenticationException) {
         return build(jwtAuthenticationException.getMessage(), HttpStatus.UNAUTHORIZED);
     }
-    /*
+
     @ExceptionHandler(ForbiddenException.class)
     public ResponseEntity<ApiResponse<ErrorResponse>> handleException(ForbiddenException forbiddenException) {
         return build(forbiddenException.getMessage(), HttpStatus.FORBIDDEN);
     }
-
+    /*
     @ExceptionHandler(NoContentException.class)
     public ResponseEntity<ApiResponse<ErrorResponse>> handleException(NoContentException noContentException) {
         return build(noContentException.getMessage(), HttpStatus.NO_CONTENT);
