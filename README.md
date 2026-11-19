@@ -1,10 +1,18 @@
 # Carva-X — Backend
 
+# Presentado por:
+
+`Sebastian Otalvaro`
+`Juan Sebastian David`
+`Heyler Santiago Acosta Salazar`
+
 API REST en **Java 25 + Spring Boot 4.1.1** con **PostgreSQL**, autenticación por **JWT** (HS512) y documentación con **Swagger / Scalar**.
 
 **Documentación de la API desplegada:** https://carva-x.onrender.com/scalar.html
 
 **Frontend desplegado (probar toda la funcionalidad):** https://amazing-nougat-a719ff.netlify.app/#/catalogo
+
+**Repositorio Frontend:** https://github.com/SeebaasO/carva-x-frontend
 
 Módulos actuales:
 
